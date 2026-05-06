@@ -77,7 +77,7 @@ export default function PrintReport() {
                   <th>اسم الموظف</th>
                   <th>المسمى الوظيفي</th>
                   <th>الفرع</th>
-                  <th>الراتب (ر.س)</th>
+                  <th>الراتب</th>
                 </tr>
               </thead>
               <tbody>

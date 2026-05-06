@@ -107,7 +107,7 @@ export default function EmployeeModal({ mode, employee }: Props) {
 
         {/* Salary */}
         <div style={{ gridColumn: '1/-1' }}>
-          <label style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 600, display: 'block', marginBottom: 6 }}>الراتب الإجمالي (ر.س)</label>
+          <label style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 600, display: 'block', marginBottom: 6 }}>الراتب الإجمالي</label>
           <input value={form.salary} onChange={set('salary')} type="number" min={0} style={inputStyle}
             onFocus={(e) => (e.target.style.borderColor = 'var(--gold)')}
             onBlur={(e) => (e.target.style.borderColor = 'var(--border2)')} />

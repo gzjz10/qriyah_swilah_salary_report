@@ -67,7 +67,7 @@ export default function RaiseModal({ employee }: { employee: Employee }) {
 
       {/* Custom amount */}
       <div style={{ marginBottom: 18 }}>
-        <label style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 600, display: 'block', marginBottom: 6 }}>أو أدخل مبلغ الزيادة (ر.س)</label>
+        <label style={{ fontSize: 12, color: 'var(--text3)', fontWeight: 600, display: 'block', marginBottom: 6 }}>أو أدخل مبلغ الزيادة</label>
         <input type="number" min={0} value={custom}
           onChange={(e) => { setCustom(e.target.value); setSelected(null); }}
           placeholder="مثال: 500"

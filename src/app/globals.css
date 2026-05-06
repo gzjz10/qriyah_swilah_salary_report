@@ -1,4 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap');
+
+/* ── Official Saudi Riyal Symbol font (U+20C1, Unicode 17 – 2025) ──
+   unicode-range tells the browser to use this font ONLY for ⃁
+   so every fmt() call renders the symbol correctly everywhere,
+   with zero component changes needed.
+   Source: github.com/emran-alhaddad/Saudi-Riyal-Font (MIT)        */
+@font-face {
+  font-family: 'SaudiRiyal';
+  font-weight: 700;
+  font-display: swap;
+  src:
+    url('https://cdn.jsdelivr.net/npm/@emran-alhaddad/saudi-riyal-font/fonts/bold/saudi_riyal.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/npm/@emran-alhaddad/saudi-riyal-font/fonts/bold/saudi_riyal.woff')  format('woff'),
+    url('https://cdn.jsdelivr.net/npm/@emran-alhaddad/saudi-riyal-font/fonts/bold/saudi_riyal.ttf')   format('truetype');
+  unicode-range: U+20C1;   /* ⃁ — SAUDI RIYAL SIGN */
+}
+
+@font-face {
+  font-family: 'SaudiRiyal';
+  font-weight: 400;
+  font-display: swap;
+  src:
+    url('https://cdn.jsdelivr.net/npm/@emran-alhaddad/saudi-riyal-font/fonts/regular/saudi_riyal.woff2') format('woff2'),
+    url('https://cdn.jsdelivr.net/npm/@emran-alhaddad/saudi-riyal-font/fonts/regular/saudi_riyal.woff')  format('woff'),
+    url('https://cdn.jsdelivr.net/npm/@emran-alhaddad/saudi-riyal-font/fonts/regular/saudi_riyal.ttf')   format('truetype');
+  unicode-range: U+20C1;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -77,7 +105,7 @@
 html { direction:rtl; scroll-behavior:smooth; }
 
 body {
-  font-family: 'Cairo','Tajawal',sans-serif;
+  font-family: 'SaudiRiyal', 'Cairo', 'Tajawal', sans-serif;
   background: var(--dark);
   color: var(--text);
   min-height: 100vh;
