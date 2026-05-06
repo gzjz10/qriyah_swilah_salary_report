@@ -1,10 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700;800&display=swap');
 
-/* ── Official Saudi Riyal Symbol font (U+20C1, Unicode 17 – 2025) ──
-   unicode-range tells the browser to use this font ONLY for ⃁
-   so every fmt() call renders the symbol correctly everywhere,
-   with zero component changes needed.
-   Source: github.com/emran-alhaddad/Saudi-Riyal-Font (MIT)        */
+/* ── Saudi Riyal Font (U+20C1, Unicode 17 – 2025) ── */
 @font-face {
   font-family: 'SaudiRiyal';
   font-weight: 700;
@@ -13,9 +9,8 @@
     url('https://cdn.jsdelivr.net/npm/@emran-alhaddad/saudi-riyal-font/fonts/bold/saudi_riyal.woff2') format('woff2'),
     url('https://cdn.jsdelivr.net/npm/@emran-alhaddad/saudi-riyal-font/fonts/bold/saudi_riyal.woff')  format('woff'),
     url('https://cdn.jsdelivr.net/npm/@emran-alhaddad/saudi-riyal-font/fonts/bold/saudi_riyal.ttf')   format('truetype');
-  unicode-range: U+20C1;   /* ⃁ — SAUDI RIYAL SIGN */
+  unicode-range: U+20C1;
 }
-
 @font-face {
   font-family: 'SaudiRiyal';
   font-weight: 400;
@@ -31,131 +26,192 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ═══════════════════════════════════════════
-   BRAND COLORS — extracted from logo
-   Amber-gold  #D4891A  /  #F5A623
-   Teal        #3DC8D5  /  #2BA8B5
-═══════════════════════════════════════════ */
-:root {
-  /* ── Amber / Gold (logo primary) ── */
-  --amber:        #D4891A;
-  --amber-light:  #F5A623;
-  --amber-bright: #FFBA3B;
-  --amber-dark:   #9B6012;
-  --amber-glow:   rgba(245,166,35,0.22);
-  --amber-glow-sm:rgba(245,166,35,0.10);
+/* ═══════════════════════════════════════════════════════════════
+   DARK THEME (default)
+═══════════════════════════════════════════════════════════════ */
+:root, [data-theme="dark"] {
+  /* Brand */
+  --amber:         #D4891A;
+  --amber-light:   #F5A623;
+  --amber-bright:  #FFBA3B;
+  --amber-dark:    #9B6012;
+  --amber-glow:    rgba(245,166,35,0.22);
+  --teal:          #3DC8D5;
+  --teal-light:    #5DD8E4;
+  --teal-dark:     #2098A8;
+  --teal-glow:     rgba(61,200,213,0.20);
 
-  /* ── Teal (logo accent) ── */
-  --teal:         #3DC8D5;
-  --teal-light:   #5DD8E4;
-  --teal-dark:    #2098A8;
-  --teal-glow:    rgba(61,200,213,0.20);
+  /* Alias */
+  --gold:          var(--amber);
+  --gold-light:    var(--amber-light);
+  --gold-dark:     var(--amber-dark);
+  --gold-glow:     var(--amber-glow);
 
-  /* ── Alias for components that use --gold ── */
-  --gold:         var(--amber);
-  --gold-light:   var(--amber-light);
-  --gold-dark:    var(--amber-dark);
-  --gold-glow:    var(--amber-glow);
-  --gold-glow-sm: var(--amber-glow-sm);
+  /* Structure */
+  --dark:          #07090F;
+  --dark2:         #0C1018;
+  --dark3:         #121824;
+  --dark4:         #1A2232;
+  --dark5:         #222C3E;
 
-  /* ── Dark backgrounds ── */
-  --dark:   #07090F;
-  --dark2:  #0C1018;
-  --dark3:  #121824;
-  --dark4:  #1A2232;
-  --dark5:  #222C3E;
+  /* Semantic backgrounds — used by all components */
+  --bg-body:       #07090F;
+  --bg-header:     rgba(7,9,15,0.85);
+  --bg-nav:        rgba(10,14,26,0.75);
+  --bg-surface:    rgba(14,20,34,0.80);
+  --bg-glass:      rgba(14,20,32,0.72);
+  --bg-modal:      rgba(10,15,28,0.95);
+  --bg-overlay:    rgba(0,0,0,0.72);
+  --bg-input:      rgba(255,255,255,0.04);
+  --bg-input-focus:rgba(255,255,255,0.06);
+  --bg-stat:       rgba(255,255,255,0.03);
+  --bg-btn-ghost:  rgba(255,255,255,0.04);
+  --bg-table-head: rgba(0,0,0,0.25);
+  --bg-table-row:  transparent;
+  --bg-row-hover:  rgba(245,166,35,0.05);
+  --bg-dark-block: rgba(0,0,0,0.20);
+  --bg-inset:      rgba(0,0,0,0.18);
 
-  /* ── Cards ── */
-  --card:         rgba(14,20,34,0.80);
-  --card2:        rgba(18,25,42,0.90);
-  --card-solid:   #0E1422;
+  /* Text */
+  --text:          #EEF1F8;
+  --text2:         #98A8C4;
+  --text3:         #576880;
 
-  /* ── Borders ── */
-  --border:   rgba(245,166,35,0.20);
-  --border2:  rgba(245,166,35,0.09);
-  --border-t: rgba(61,200,213,0.20);
+  /* Borders */
+  --border:        rgba(245,166,35,0.20);
+  --border2:       rgba(245,166,35,0.09);
+  --border-subtle: rgba(255,255,255,0.07);
+  --border-input:  rgba(255,255,255,0.10);
 
-  /* ── Text ── */
-  --text:   #EEF1F8;
-  --text2:  #98A8C4;
-  --text3:  #576880;
+  /* Shadows */
+  --shadow:        0 4px 28px rgba(0,0,0,0.50);
+  --shadow-lg:     0 12px 48px rgba(0,0,0,0.60);
+  --glow:          0 0 28px rgba(245,166,35,0.18);
+  --glow-teal:     0 0 24px rgba(61,200,213,0.16);
 
-  /* ── Status ── */
-  --green:  #22C55E;
-  --blue:   #3B82F6;
-  --red:    #EF4444;
-  --purple: #8B5CF6;
+  /* Status */
+  --green:         #22C55E;
+  --blue:          #3B82F6;
+  --red:           #EF4444;
+  --purple:        #8B5CF6;
 
-  /* ── Shadows & effects ── */
-  --shadow:    0 4px 28px rgba(0,0,0,0.50);
-  --shadow-lg: 0 12px 48px rgba(0,0,0,0.60);
-  --glow:      0 0 28px rgba(245,166,35,0.18);
-  --glow-teal: 0 0 24px rgba(61,200,213,0.16);
-
-  --blur:       blur(18px);
-  --transition: 180ms ease;
-  --radius:     14px;
-  --radius-lg:  20px;
+  /* Misc */
+  --blur:          blur(18px);
+  --transition:    180ms ease;
+  --card:          var(--bg-surface);
 }
 
-/* ═══════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════════
+   LIGHT THEME
+═══════════════════════════════════════════════════════════════ */
+[data-theme="light"] {
+  /* Structure lightened */
+  --dark:          #F5F3EE;
+  --dark2:         #EDEAE3;
+  --dark3:         #E4E1D8;
+  --dark4:         #D8D4C9;
+  --dark5:         #CAC5B8;
+
+  /* Semantic backgrounds */
+  --bg-body:       #F7F5F0;
+  --bg-header:     rgba(255,255,255,0.92);
+  --bg-nav:        rgba(250,248,244,0.94);
+  --bg-surface:    rgba(255,255,255,0.95);
+  --bg-glass:      rgba(255,255,255,0.88);
+  --bg-modal:      rgba(252,251,248,0.98);
+  --bg-overlay:    rgba(0,0,0,0.50);
+  --bg-input:      rgba(0,0,0,0.04);
+  --bg-input-focus:rgba(0,0,0,0.06);
+  --bg-stat:       rgba(0,0,0,0.025);
+  --bg-btn-ghost:  rgba(0,0,0,0.05);
+  --bg-table-head: rgba(245,166,35,0.07);
+  --bg-table-row:  transparent;
+  --bg-row-hover:  rgba(245,166,35,0.06);
+  --bg-dark-block: rgba(0,0,0,0.04);
+  --bg-inset:      rgba(0,0,0,0.04);
+
+  /* Text */
+  --text:          #1A1F2E;
+  --text2:         #4A5568;
+  --text3:         #8896A8;
+
+  /* Borders */
+  --border:        rgba(245,166,35,0.28);
+  --border2:       rgba(245,166,35,0.14);
+  --border-subtle: rgba(0,0,0,0.08);
+  --border-input:  rgba(0,0,0,0.14);
+
+  /* Shadows — softer in light mode */
+  --shadow:        0 2px 16px rgba(0,0,0,0.09), 0 1px 4px rgba(0,0,0,0.06);
+  --shadow-lg:     0 8px 36px rgba(0,0,0,0.12);
+  --glow:          0 0 24px rgba(245,166,35,0.14);
+  --glow-teal:     0 0 20px rgba(61,200,213,0.12);
+
+  --card:          var(--bg-surface);
+}
+
+/* ═══════════════════════════════════════════════════════════════
    BASE
-═══════════════════════════════════════════ */
+═══════════════════════════════════════════════════════════════ */
 *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
 html { direction:rtl; scroll-behavior:smooth; }
 
 body {
-  font-family: 'SaudiRiyal', 'Cairo', 'Tajawal', sans-serif;
-  background: var(--dark);
+  font-family: 'SaudiRiyal','Cairo','Tajawal',sans-serif;
+  background: var(--bg-body);
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* Ambient background — amber + teal glow matching logo */
-body::before {
+/* Ambient glow — dark */
+[data-theme="dark"] body::before,
+:root body::before {
   content:'';
   position:fixed; inset:0;
   background:
-    radial-gradient(ellipse 65% 45% at 12% 8%,  rgba(245,166,35,0.09)  0%, transparent 55%),
-    radial-gradient(ellipse 50% 60% at 88% 85%,  rgba(61,200,213,0.07)  0%, transparent 55%),
-    radial-gradient(ellipse 35% 35% at 55% 45%,  rgba(245,166,35,0.04)  0%, transparent 60%),
+    radial-gradient(ellipse 65% 45% at 12% 8%,  rgba(245,166,35,0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 88% 85%,  rgba(61,200,213,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 35% 35% at 55% 45%,  rgba(245,166,35,0.04) 0%, transparent 60%),
     repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(245,166,35,0.006) 60px, rgba(245,166,35,0.006) 61px);
   pointer-events:none; z-index:0;
 }
 
-/* ═══════════════════════════════════════════
-   SCROLLBAR
-═══════════════════════════════════════════ */
+/* Ambient — light */
+[data-theme="light"] body::before {
+  background:
+    radial-gradient(ellipse 65% 45% at 12% 8%,  rgba(245,166,35,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 60% at 88% 85%,  rgba(61,200,213,0.05) 0%, transparent 55%),
+    repeating-linear-gradient(45deg, transparent, transparent 60px, rgba(245,166,35,0.015) 60px, rgba(245,166,35,0.015) 61px);
+  pointer-events:none; z-index:0;
+}
+
+/* ── Scrollbar ── */
 ::-webkit-scrollbar       { width:5px; height:5px; }
 ::-webkit-scrollbar-track { background:var(--dark2); }
-::-webkit-scrollbar-thumb { background:rgba(245,166,35,0.28); border-radius:4px; }
-::-webkit-scrollbar-thumb:hover { background:rgba(245,166,35,0.50); }
+::-webkit-scrollbar-thumb { background:rgba(245,166,35,0.30); border-radius:4px; }
+::-webkit-scrollbar-thumb:hover { background:rgba(245,166,35,0.52); }
 
-/* ═══════════════════════════════════════════
-   FOCUS
-═══════════════════════════════════════════ */
+/* ── Focus ── */
 :focus-visible { outline:2px solid var(--amber-light); outline-offset:2px; border-radius:4px; }
 
-/* ═══════════════════════════════════════════
-   RANK BADGES
-═══════════════════════════════════════════ */
+/* ── Rank badges ── */
 .rank-gold   { background:linear-gradient(135deg,#FFD700,#B8860B); color:#000; box-shadow:0 2px 8px rgba(255,215,0,0.4); }
 .rank-silver { background:linear-gradient(135deg,#D4D4D4,#8A8A8A); color:#000; }
 .rank-bronze { background:linear-gradient(135deg,#CD7F32,#8B4513); color:#fff; }
 .rank-other  { background:var(--dark4); color:var(--text3); }
 
-/* ═══════════════════════════════════════════
-   SALARY BAR
-═══════════════════════════════════════════ */
+/* ── Salary bar ── */
 .salary-bar  { width:56px; height:4px; background:var(--dark4); border-radius:3px; overflow:hidden; }
 .salary-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--amber-dark),var(--amber-bright)); transition:width .7s ease; }
 
-/* ═══════════════════════════════════════════
-   ANIMATIONS
-═══════════════════════════════════════════ */
+/* Light mode salary bar track */
+[data-theme="light"] .salary-bar  { background:var(--dark3); }
+
+/* ── Animations ── */
 @keyframes fadeInUp  { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
 @keyframes fadeIn    { from{opacity:0} to{opacity:1} }
 @keyframes scaleIn   { from{opacity:0;transform:scale(0.96)} to{opacity:1;transform:scale(1)} }
@@ -184,28 +240,41 @@ body::before {
   *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }
 }
 
-/* ═══════════════════════════════════════════
-   SKELETON
-═══════════════════════════════════════════ */
+/* ── Skeleton ── */
 .skeleton {
   background:linear-gradient(90deg,var(--dark3) 25%,var(--dark4) 50%,var(--dark3) 75%);
   background-size:800px 100%;
   animation:shimmer 1.6s infinite;
   border-radius:6px;
 }
+[data-theme="light"] .skeleton {
+  background:linear-gradient(90deg,#E8E5DD 25%,#F0EDE5 50%,#E8E5DD 75%);
+  background-size:800px 100%;
+}
 
-/* ═══════════════════════════════════════════
+/* ── Theme transition ── */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, box-shadow;
+  transition-duration: 250ms;
+  transition-timing-function: ease;
+}
+/* Exclude animation-heavy elements from the global transition */
+.animate-fade-in-up, .animate-scale-in, .animate-fade-in,
+.skeleton, .salary-fill, .bar-animate {
+  transition: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
    PRINT
-═══════════════════════════════════════════ */
+═══════════════════════════════════════════════════════════════ */
 @media print {
-  body { background:#fff !important; color:#1a1a2e !important; font-family:'Cairo','Tajawal',sans-serif; direction:rtl; line-height:1.5; }
+  body { background:#fff !important; color:#1a1a2e !important; font-family:'Cairo','Tajawal',sans-serif; direction:rtl; }
   body::before { display:none !important; }
   header,nav,.no-print,[data-no-print] { display:none !important; }
   #print-report { display:block !important; }
   @page { size:A4; margin:14mm 12mm; }
   .print-page-break  { page-break-before:always; }
   .print-avoid-break { page-break-inside:avoid; }
-
   .pr-header { text-align:center; padding:20px; border:2px solid #1a1a2e; border-radius:8px; margin-bottom:24px; }
   .pr-header h1 { font-size:22px; font-weight:900; color:#1a1a2e; margin-bottom:6px; }
   .pr-header p  { font-size:13px; color:#555; }
