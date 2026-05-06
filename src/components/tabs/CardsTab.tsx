@@ -85,7 +85,7 @@ export default function CardsTab() {
                 key={e.id}
                 className={`animate-fade-in-up stagger-${Math.min((i % 5) + 1, 5)}`}
                 style={{
-                  background: 'rgba(14,20,34,0.75)',
+                  background: 'var(--bg-glass)',
                   backdropFilter: 'blur(14px)',
                   WebkitBackdropFilter: 'blur(14px)',
                   border: '1px solid var(--border2)',
@@ -97,7 +97,7 @@ export default function CardsTab() {
                 onMouseEnter={(el) => {
                   el.currentTarget.style.borderColor = col + '55';
                   el.currentTarget.style.transform   = 'translateY(-4px)';
-                  el.currentTarget.style.boxShadow   = `0 12px 36px rgba(0,0,0,0.35), 0 0 24px ${col}22`;
+                  el.currentTarget.style.boxShadow   = `var(--shadow), 0 0 24px ${col}22`;
                 }}
                 onMouseLeave={(el) => {
                   el.currentTarget.style.borderColor = 'var(--border2)';
@@ -115,7 +115,7 @@ export default function CardsTab() {
                 {/* header */}
                 <div style={{
                   padding: '18px 16px 14px',
-                  background: `linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,0,0,0.1))`,
+                  background: `linear-gradient(135deg, ${col}12, var(--bg-dark-block))`,
                   borderBottom: '1px solid var(--border2)',
                   display: 'flex', alignItems: 'center', gap: 13,
                 }}>
@@ -129,7 +129,7 @@ export default function CardsTab() {
                     boxShadow: `0 0 14px ${col}20`,
                   }}>{getInitials(e.name)}</div>
                   <div style={{ minWidth: 0 }}>
-                    <div style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{e.name}</div>
+                    <div style={{ fontSize: 13, fontWeight: 700, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', color: 'var(--text)' }}>{e.name}</div>
                     <div style={{ fontSize: 11, color: 'var(--text3)', marginTop: 3 }}>{e.title}</div>
                   </div>
                 </div>
@@ -147,12 +147,12 @@ export default function CardsTab() {
 
                   {/* salary badge */}
                   <div style={{
-                    background: 'rgba(200,150,62,0.07)',
-                    border: '1px solid rgba(200,150,62,0.18)',
+                    background: 'rgba(245,166,35,0.07)',
+                    border: '1px solid rgba(245,166,35,0.18)',
                     borderRadius: 10, padding: '10px 14px',
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                     marginBottom: 12,
-                    boxShadow: 'inset 0 1px 0 rgba(200,150,62,0.08)',
+                    boxShadow: 'inset 0 1px 0 rgba(245,166,35,0.08)',
                   }}>
                     <span style={{ fontSize: 11, color: 'var(--text3)' }}>الراتب الإجمالي</span>
                     <span style={{ fontSize: 17, fontWeight: 900, color: 'var(--gold-light)', textShadow: '0 0 14px rgba(200,150,62,0.3)' }}>{fmt(e.salary)}</span>
