@@ -16,11 +16,14 @@ const DEPT_STAT_COLORS = [
 ];
 
 export default function SalariesTab() {
-  const { employees, openModal } = useEmployees();
-  const [search, setSearch]             = useState('');
-  const [deptFilter, setDeptFilter]     = useState('');
-  const [branchFilter, setBranchFilter] = useState('');
-  const [sortDesc, setSortDesc]         = useState(true);
+  const { employees, openModal, printFilter, setPrintFilter } = useEmployees();
+  const search       = printFilter.search;
+  const deptFilter   = printFilter.dept;
+  const branchFilter = printFilter.branch;
+  const setSearch        = (v: string) => setPrintFilter({ search: v });
+  const setDeptFilter    = (v: string) => setPrintFilter({ dept: v });
+  const setBranchFilter  = (v: string) => setPrintFilter({ branch: v });
+  const [sortDesc, setSortDesc] = useState(true);
 
   const depts    = useMemo(() => Array.from(new Set(employees.map((e) => e.dept))),   [employees]);
   const branches = useMemo(() => Array.from(new Set(employees.map((e) => e.branch))), [employees]);
