@@ -40,10 +40,10 @@ export default function TabsBar() {
             role="tab"
             style={{
               padding: '13px 18px',
-              background: active ? 'rgba(200,150,62,0.07)' : 'none',
+              background: active ? 'rgba(245,166,35,0.07)' : 'none',
               border: 'none',
-              borderBottom: `2px solid ${active ? 'var(--gold)' : 'transparent'}`,
-              color: active ? 'var(--gold-light)' : 'var(--text3)',
+              borderBottom: `2px solid ${active ? 'var(--amber-light)' : 'transparent'}`,
+              color: active ? 'var(--amber-light)' : 'var(--text3)',
               fontFamily: 'inherit',
               fontSize: 13,
               fontWeight: 600,
