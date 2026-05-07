@@ -46,7 +46,7 @@ export function buildSystemPrompt(employees: Employee[]): string {
 
 ## معلومات الشركة:
 - اسم الشركة: شركة قرية صويلح للتجارة
-- الأقسام الستة: ${DEPT_LIST.join('، ')}
+- الأقسام (${DEPT_LIST.length} قسم): ${DEPT_LIST.join('، ')}
 - الفروع الثلاثة: ${BRANCH_LIST.join('، ')}
 
 ## ملخص الرواتب:

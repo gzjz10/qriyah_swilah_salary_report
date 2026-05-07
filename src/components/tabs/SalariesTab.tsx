@@ -7,14 +7,24 @@ import { fmt, DEPT_ACCENT } from '@/lib/utils';
 
 const BRANCH_ICON: Record<string, string> = { قرطبة:'🏙', 'مستودع الشفا':'🏭', 'مستودع قوين':'📦' };
 
-const DEPT_STAT_COLORS = [
-  { accent:'#F5A623', glow:'rgba(245,166,35,0.15)' },
-  { accent:'#3DC8D5', glow:'rgba(61,200,213,0.15)'  },
-  { accent:'#FB923C', glow:'rgba(251,146,60,0.15)'  },
-  { accent:'#22C55E', glow:'rgba(34,197,94,0.15)'   },
-  { accent:'#8B5CF6', glow:'rgba(139,92,246,0.15)'  },
-  { accent:'#F43F5E', glow:'rgba(244,63,94,0.15)'   },
-];
+const DEPT_STAT_COLORS: Record<string, { accent: string; glow: string }> = {
+  'الإدارة':           { accent:'#F5A623', glow:'rgba(245,166,35,0.15)' },
+  'المالية والمحاسبة': { accent:'#E8B86D', glow:'rgba(232,184,109,0.15)' },
+  'الموارد البشرية':   { accent:'#3DC8D5', glow:'rgba(61,200,213,0.15)' },
+  'تقنية المعلومات':   { accent:'#60A5FA', glow:'rgba(96,165,250,0.15)' },
+  'التسويق':           { accent:'#F472B6', glow:'rgba(244,114,182,0.15)' },
+  'المبيعات':          { accent:'#A78BFA', glow:'rgba(167,139,250,0.15)' },
+  'خدمة العملاء':      { accent:'#34D399', glow:'rgba(52,211,153,0.15)' },
+  'المعارض':           { accent:'#22C55E', glow:'rgba(34,197,94,0.15)' },
+  'المشتريات':         { accent:'#F43F5E', glow:'rgba(244,63,94,0.15)' },
+  'المستودع':          { accent:'#FB923C', glow:'rgba(251,146,60,0.15)' },
+  'النقل':             { accent:'#FBBF24', glow:'rgba(251,191,36,0.15)' },
+  'الصيانة والهندسة':  { accent:'#6EE7B7', glow:'rgba(110,231,183,0.15)' },
+  'الجودة والرقابة':   { accent:'#38BDF8', glow:'rgba(56,189,248,0.15)' },
+  'الشؤون القانونية':  { accent:'#C084FC', glow:'rgba(192,132,252,0.15)' },
+  'خدمات':             { accent:'#8B5CF6', glow:'rgba(139,92,246,0.15)' },
+};
+const FALLBACK_STAT_COLOR = { accent:'#94A3B8', glow:'rgba(148,163,184,0.15)' };
 
 export default function SalariesTab() {
   const { employees, openModal, printFilter, setPrintFilter } = useEmployees();
@@ -54,7 +64,7 @@ export default function SalariesTab() {
       {/* Dept stat cards */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(175px,1fr))', gap:14, marginBottom:24 }}>
         {Object.entries(deptStats).map(([dept, s], i) => {
-          const { accent, glow } = DEPT_STAT_COLORS[i % DEPT_STAT_COLORS.length];
+          const { accent, glow } = DEPT_STAT_COLORS[dept] || FALLBACK_STAT_COLOR;
           const active = deptFilter === dept;
           return (
             <button key={dept} onClick={() => setDeptFilter(active ? '' : dept)}
