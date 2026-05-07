@@ -50,8 +50,8 @@ export default function RaiseModal({ employee }: { employee: Employee }) {
           <button key={p}
             onClick={() => { setSelected(selected === p ? null : p); setCustom(''); }}
             style={{
-              background: selected === p ? 'rgba(200,150,62,0.15)' : 'var(--dark3)',
-              border: `1px solid ${selected === p ? 'var(--gold)' : 'var(--border2)'}`,
+              background: selected === p ? 'rgba(245,166,35,0.15)' : 'var(--bg-input)',
+              border: `1px solid ${selected === p ? 'var(--amber-light)' : 'var(--border2)'}`,
               borderRadius: 8, padding: '10px', textAlign: 'center', cursor: 'pointer',
               fontFamily: 'inherit', fontSize: 14, fontWeight: 700,
               color: selected === p ? 'var(--gold-light)' : 'var(--text2)',
@@ -71,9 +71,9 @@ export default function RaiseModal({ employee }: { employee: Employee }) {
         <input type="number" min={0} value={custom}
           onChange={(e) => { setCustom(e.target.value); setSelected(null); }}
           placeholder="مثال: 500"
-          style={{ width: '100%', background: 'var(--dark3)', border: '1px solid var(--border2)', borderRadius: 10, padding: '10px 14px', color: 'var(--text)', fontFamily: 'inherit', fontSize: 13, outline: 'none' }}
-          onFocus={(e) => (e.target.style.borderColor = 'var(--gold)')}
-          onBlur={(e) => (e.target.style.borderColor = 'var(--border2)')} />
+          style={{ width: '100%', background: 'var(--bg-input)', border: '1px solid var(--border2)', borderRadius: 10, padding: '10px 14px', color: 'var(--text)', fontFamily: 'inherit', fontSize: 13, outline: 'none', transition: 'border-color var(--transition)' }}
+          onFocus={(e) => (e.target.style.borderColor = 'var(--amber-light)')}
+          onBlur={(e)  => (e.target.style.borderColor = 'var(--border2)')} />
       </div>
 
       {/* Preview */}

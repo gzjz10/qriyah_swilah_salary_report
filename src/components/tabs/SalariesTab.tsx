@@ -13,6 +13,7 @@ const DEPT_STAT_COLORS = [
   { accent:'#FB923C', glow:'rgba(251,146,60,0.15)'  },
   { accent:'#22C55E', glow:'rgba(34,197,94,0.15)'   },
   { accent:'#8B5CF6', glow:'rgba(139,92,246,0.15)'  },
+  { accent:'#F43F5E', glow:'rgba(244,63,94,0.15)'   },
 ];
 
 export default function SalariesTab() {

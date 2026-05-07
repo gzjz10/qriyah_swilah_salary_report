@@ -42,7 +42,7 @@ export default function DeleteModal({ employee }: { employee: Employee }) {
         </div>
         <div style={{ display: 'flex', gap: 10, justifyContent: 'center' }}>
           <button onClick={closeModal}
-            style={{ background: 'var(--dark4)', border: '1px solid var(--border2)', color: 'var(--text2)', padding: '10px 24px', borderRadius: 10, fontFamily: 'inherit', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
+            style={{ background: 'var(--bg-btn-ghost)', border: '1px solid var(--border2)', color: 'var(--text2)', padding: '10px 24px', borderRadius: 10, fontFamily: 'inherit', fontSize: 13, fontWeight: 600, cursor: 'pointer' }}>
             إلغاء
           </button>
           <button onClick={handleDelete} disabled={deleting}
