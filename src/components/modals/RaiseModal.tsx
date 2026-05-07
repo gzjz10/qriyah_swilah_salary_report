@@ -23,12 +23,9 @@ export default function RaiseModal({ employee }: { employee: Employee }) {
   const handleSave = async () => {
     if (newSalary <= employee.salary) return;
     setSaving(true);
-    try {
-      await raiseEmployee(employee.id, newSalary);
-      closeModal();
-    } finally {
-      setSaving(false);
-    }
+    await raiseEmployee(employee.id, newSalary); // optimistic — never throws
+    setSaving(false);
+    closeModal();
   };
 
   return (

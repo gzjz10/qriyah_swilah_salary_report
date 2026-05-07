@@ -49,28 +49,23 @@ export default function EmployeeModal({ mode, employee }: Props) {
     if (!form.salary)       { setError('يرجى إدخال الراتب');          return; }
 
     setSaving(true);
-    try {
-      const payload = {
-        name:   form.name.trim(),
-        title:  form.title.trim(),
-        dept:   form.dept,
-        branch: form.branch,
-        salary: parseInt(form.salary, 10) || 0,
-      };
+    const payload = {
+      name:   form.name.trim(),
+      title:  form.title.trim(),
+      dept:   form.dept,
+      branch: form.branch,
+      salary: parseInt(form.salary, 10) || 0,
+    };
 
-      if (mode === 'add') {
-        await addEmployee(payload);
-      } else if (employee) {
-        await editEmployee(employee.id, payload);
-      }
-
-      closeModal();
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'حدث خطأ أثناء الحفظ. حاول مرة أخرى.';
-      setError(msg);
-    } finally {
-      setSaving(false);
+    // Context uses optimistic updates — always succeeds locally
+    if (mode === 'add') {
+      await addEmployee(payload);
+    } else if (employee) {
+      await editEmployee(employee.id, payload);
     }
+
+    setSaving(false);
+    closeModal();
   };
 
   const focusStyle = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => {

@@ -95,43 +95,71 @@ export function EmployeeProvider({ children }: { children: React.ReactNode }) {
   const closeModal = useCallback(() => setModal(null), []);
 
   const addEmployee = useCallback(async (emp: Omit<Employee, 'id'|'created_at'|'updated_at'>) => {
-    if (!supabaseConfigured) {
-      setEmployees((prev) => [...prev, { ...emp, id: Date.now() }]);
-      showToast('تم إضافة الموظف بنجاح'); return;
-    }
-    const created = await insertEmployee(emp);
-    setEmployees((prev) => [...prev, created]);
+    // Optimistic: add with temp ID immediately so UI reflects the change
+    const tempId = Date.now();
+    setEmployees((prev) => [...prev, { ...emp, id: tempId }]);
     showToast('تم إضافة الموظف بنجاح');
+
+    if (supabaseConfigured) {
+      try {
+        const created = await insertEmployee(emp);
+        // Replace temp entry with server entry (real ID)
+        setEmployees((prev) =>
+          prev.map((e) => e.id === tempId ? created : e)
+        );
+      } catch (err) {
+        console.error('[Supabase] addEmployee failed:', err);
+        showToast('تحذير: لم يتم الحفظ في قاعدة البيانات — تحقق من الإعدادات');
+      }
+    }
   }, [showToast]);
 
   const editEmployee = useCallback(async (id: number, updates: Partial<Employee>) => {
-    if (!supabaseConfigured) {
-      setEmployees((prev) => prev.map((e) => e.id === id ? { ...e, ...updates } : e));
-      showToast('تم تحديث بيانات الموظف'); return;
-    }
-    const updated = await updateEmployee(id, updates);
-    setEmployees((prev) => prev.map((e) => e.id === id ? updated : e));
+    // Optimistic: update local state immediately — modal can close right away
+    setEmployees((prev) => prev.map((e) => e.id === id ? { ...e, ...updates } : e));
     showToast('تم تحديث بيانات الموظف');
+
+    if (supabaseConfigured) {
+      try {
+        const updated = await updateEmployee(id, updates);
+        // Sync with server response (e.g. updated_at timestamp)
+        setEmployees((prev) => prev.map((e) => e.id === id ? updated : e));
+      } catch (err) {
+        console.error('[Supabase] editEmployee failed:', err);
+        showToast('تحذير: التعديل لم يُحفظ في قاعدة البيانات');
+      }
+    }
   }, [showToast]);
 
   const removeEmployee = useCallback(async (id: number) => {
-    if (!supabaseConfigured) {
-      setEmployees((prev) => prev.filter((e) => e.id !== id));
-      showToast('تم حذف الموظف'); return;
-    }
-    await deleteEmployee(id);
+    // Optimistic: remove immediately
     setEmployees((prev) => prev.filter((e) => e.id !== id));
     showToast('تم حذف الموظف');
+
+    if (supabaseConfigured) {
+      try {
+        await deleteEmployee(id);
+      } catch (err) {
+        console.error('[Supabase] removeEmployee failed:', err);
+        showToast('تحذير: الحذف لم يُطبّق في قاعدة البيانات');
+      }
+    }
   }, [showToast]);
 
   const raiseEmployee = useCallback(async (id: number, newSalary: number) => {
-    if (!supabaseConfigured) {
-      setEmployees((prev) => prev.map((e) => e.id === id ? { ...e, salary: newSalary } : e));
-      showToast('تم تحديث الراتب بنجاح'); return;
-    }
-    const updated = await updateEmployee(id, { salary: newSalary });
-    setEmployees((prev) => prev.map((e) => e.id === id ? updated : e));
+    // Optimistic: update salary immediately
+    setEmployees((prev) => prev.map((e) => e.id === id ? { ...e, salary: newSalary } : e));
     showToast('تم تحديث الراتب بنجاح');
+
+    if (supabaseConfigured) {
+      try {
+        const updated = await updateEmployee(id, { salary: newSalary });
+        setEmployees((prev) => prev.map((e) => e.id === id ? updated : e));
+      } catch (err) {
+        console.error('[Supabase] raiseEmployee failed:', err);
+        showToast('تحذير: تحديث الراتب لم يُحفظ في قاعدة البيانات');
+      }
+    }
   }, [showToast]);
 
   const printReport = useCallback(() => { window.print(); }, []);

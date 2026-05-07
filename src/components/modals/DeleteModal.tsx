@@ -13,12 +13,9 @@ export default function DeleteModal({ employee }: { employee: Employee }) {
 
   const handleDelete = async () => {
     setDeleting(true);
-    try {
-      await removeEmployee(employee.id);
-      closeModal();
-    } finally {
-      setDeleting(false);
-    }
+    await removeEmployee(employee.id); // optimistic — never throws
+    setDeleting(false);
+    closeModal();
   };
 
   return (
