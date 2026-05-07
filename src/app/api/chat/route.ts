@@ -1,4 +1,4 @@
-import { streamText, convertToModelMessages, type UIMessage } from 'ai';
+import { streamText, convertToModelMessages, createUIMessageStreamResponse, type UIMessage } from 'ai';
 import { createOpenAI } from '@ai-sdk/openai';
 import { fetchEmployees } from '@/lib/supabase';
 import { SEED_EMPLOYEES } from '@/lib/seed-data';
@@ -17,10 +17,7 @@ const openrouter = createOpenAI({
 
 export async function POST(req: Request) {
   if (!process.env.OPENROUTER_API_KEY) {
-    return Response.json(
-      { error: 'خدمة الذكاء الاصطناعي غير مُهيأة. يرجى التحقق من مفتاح API.' },
-      { status: 500 }
-    );
+    return new Response('خدمة الذكاء الاصطناعي غير مُهيأة. يرجى التحقق من مفتاح API.', { status: 500 });
   }
 
   const { messages }: { messages: UIMessage[] } = await req.json();
@@ -40,27 +37,15 @@ export async function POST(req: Request) {
     employees = SEED_EMPLOYEES;
   }
 
-  try {
-    const modelMessages = await convertToModelMessages(messages);
-    const result = streamText({
-      model: openrouter('anthropic/claude-opus-4-6'),
-      system: buildSystemPrompt(employees),
-      messages: modelMessages,
-      maxOutputTokens: 4096,
-    });
+  const modelMessages = await convertToModelMessages(messages);
+  const result = streamText({
+    model: openrouter.chat('anthropic/claude-opus-4-6'),
+    system: buildSystemPrompt(employees),
+    messages: modelMessages,
+    maxOutputTokens: 4096,
+  });
 
-    return result.toUIMessageStreamResponse();
-  } catch (err: unknown) {
-    const status = (err as { status?: number }).status;
-    if (status === 429) {
-      return Response.json(
-        { error: 'تم تجاوز الحد المسموح. حاول مجدداً بعد قليل.' },
-        { status: 429 }
-      );
-    }
-    return Response.json(
-      { error: 'حدث خطأ أثناء المعالجة. حاول مجدداً.' },
-      { status: 500 }
-    );
-  }
+  return createUIMessageStreamResponse({
+    stream: result.toUIMessageStream(),
+  });
 }
