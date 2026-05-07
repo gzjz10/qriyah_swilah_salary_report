@@ -109,6 +109,13 @@ export const TITLE_LIST: { group: string; titles: string[] }[] = [
 ];
 export const BRANCH_LIST = ['قرطبة', 'مستودع الشفا', 'مستودع قوين'];
 
+export const median = (nums: number[]): number => {
+  if (!nums.length) return 0;
+  const sorted = [...nums].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+};
+
 export const getInitials = (name: string) =>
   (name || '').split(' ').slice(0, 2).map((w) => w[0] || '').join('');
 
