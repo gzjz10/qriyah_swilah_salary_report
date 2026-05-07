@@ -11,7 +11,7 @@ const openrouter = createOpenAI({
   apiKey: process.env.OPENROUTER_API_KEY ?? '',
   headers: {
     'HTTP-Referer': 'https://qriyah-swilah-salary-report.vercel.app',
-    'X-Title': 'نظام إدارة المرتبات - شركة قرية صويلح',
+    'X-Title': 'Qriyah Swilah Salary System',
   },
 });
 
