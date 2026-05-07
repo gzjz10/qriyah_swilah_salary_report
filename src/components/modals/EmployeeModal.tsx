@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { UserPlus, Pencil, Save, AlertCircle } from 'lucide-react';
 import ModalShell from './ModalShell';
 import { useEmployees } from '@/context/EmployeeContext';
-import { DEPT_LIST, BRANCH_LIST, DEPT_COLORS } from '@/lib/utils';
+import { DEPT_LIST, BRANCH_LIST, DEPT_COLORS, TITLE_LIST } from '@/lib/utils';
 import type { Employee } from '@/types';
 
 interface Props {
@@ -35,6 +35,10 @@ export default function EmployeeModal({ mode, employee }: Props) {
     branch: employee?.branch ?? BRANCH_LIST[0],
     salary: employee?.salary?.toString() ?? '',
   });
+  const allTitles = TITLE_LIST.flatMap((g) => g.titles);
+  const isCustom = form.title !== '' && !allTitles.includes(form.title);
+  const [useCustom, setUseCustom] = useState(isCustom);
+
   const [saving, setSaving] = useState(false);
   const [error,  setError]  = useState('');
 
@@ -111,14 +115,53 @@ export default function EmployeeModal({ mode, employee }: Props) {
           <label style={{ display:'block', fontSize:12, fontWeight:700, color:'var(--text3)', marginBottom:7 }}>
             المسمى الوظيفي <span style={{ color:'var(--red)' }}>*</span>
           </label>
-          <input
-            value={form.title}
-            onChange={set('title')}
-            placeholder="مثال: مدير التسويق"
-            style={inputStyle}
-            onFocus={focusStyle}
-            onBlur={blurStyle}
-          />
+          {!useCustom ? (
+            <select
+              value={form.title}
+              onChange={(e) => {
+                if (e.target.value === '__custom__') {
+                  setUseCustom(true);
+                  setForm((f) => ({ ...f, title: '' }));
+                } else {
+                  set('title')(e);
+                }
+              }}
+              style={{ ...inputStyle, cursor: 'pointer' }}
+              onFocus={focusStyle}
+              onBlur={blurStyle}
+            >
+              <option value="">— اختر المسمى الوظيفي —</option>
+              {TITLE_LIST.map((group) => (
+                <optgroup key={group.group} label={group.group}>
+                  {group.titles.map((t) => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
+                </optgroup>
+              ))}
+              <option value="__custom__">✏️ أدخل مسمى مخصص...</option>
+            </select>
+          ) : (
+            <div style={{ display: 'flex', gap: 8 }}>
+              <input
+                value={form.title}
+                onChange={set('title')}
+                placeholder="اكتب المسمى الوظيفي"
+                style={{ ...inputStyle, flex: 1 }}
+                onFocus={focusStyle}
+                onBlur={blurStyle}
+                autoFocus
+              />
+              <button
+                type="button"
+                onClick={() => { setUseCustom(false); setForm((f) => ({ ...f, title: '' })); }}
+                style={{ background: 'var(--bg-btn-ghost)', border: '1px solid var(--border2)', color: 'var(--text3)', borderRadius: 10, padding: '0 14px', cursor: 'pointer', fontSize: 12, whiteSpace: 'nowrap', fontFamily: 'inherit' }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = 'var(--amber-light)'; e.currentTarget.style.color = 'var(--amber-light)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = 'var(--border2)'; e.currentTarget.style.color = 'var(--text3)'; }}
+              >
+                من القائمة
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Dept */}

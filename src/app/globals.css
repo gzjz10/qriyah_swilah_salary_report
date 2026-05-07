@@ -235,6 +235,12 @@ body {
 .stagger-3 { animation-delay:.12s }
 .stagger-4 { animation-delay:.16s }
 .stagger-5 { animation-delay:.20s }
+.stagger-6 { animation-delay:.24s }
+
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.75); }
+  40% { opacity: 1; transform: scale(1); }
+}
 
 @media (prefers-reduced-motion:reduce) {
   *,*::before,*::after { animation-duration:.01ms !important; transition-duration:.01ms !important; }

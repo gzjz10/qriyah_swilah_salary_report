@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { Printer, UserPlus, LogOut, Sun, Moon } from 'lucide-react';
+import Link from 'next/link';
+import { Printer, UserPlus, LogOut, Sun, Moon, Sparkles } from 'lucide-react';
 import { useEmployees } from '@/context/EmployeeContext';
 import { useTheme } from '@/context/ThemeContext';
 import { fmt } from '@/lib/utils';
@@ -69,6 +70,36 @@ export default function Header({ onLogout }: Props) {
 
       {/* Actions */}
       <div style={{ display:'flex', gap:8, flexShrink:0 }}>
+        {/* AI Chat */}
+        <Link href="/chat" style={{
+          background: 'linear-gradient(135deg, rgba(245,166,35,0.12), rgba(61,200,213,0.08))',
+          border: '1px solid rgba(245,166,35,0.35)',
+          color: 'var(--amber-light)',
+          padding: '8px 16px',
+          borderRadius: 10,
+          fontFamily: 'inherit',
+          fontSize: 13,
+          fontWeight: 700,
+          cursor: 'pointer',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 6,
+          transition: 'all var(--transition)',
+          whiteSpace: 'nowrap',
+          textDecoration: 'none',
+        }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(245,166,35,0.22)';
+            e.currentTarget.style.boxShadow = '0 0 18px rgba(245,166,35,0.28)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'linear-gradient(135deg, rgba(245,166,35,0.12), rgba(61,200,213,0.08))';
+            e.currentTarget.style.boxShadow = 'none';
+          }}
+        >
+          <Sparkles size={14} strokeWidth={2.2} /> المستشار الذكي
+        </Link>
+
         {/* Add employee */}
         <button aria-label="إضافة موظف" onClick={() => openModal({ type:'add' })}
           style={{ background:'rgba(61,200,213,0.10)', border:'1px solid rgba(61,200,213,0.32)', color:'var(--teal-light)', padding:'8px 16px', borderRadius:10, fontFamily:'inherit', fontSize:13, fontWeight:700, cursor:'pointer', display:'flex', alignItems:'center', gap:6, transition:'all var(--transition)', whiteSpace:'nowrap' }}
